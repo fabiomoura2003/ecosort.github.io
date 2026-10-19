@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EcoSort: proposta de um caixote inteligente com triagem automática de resíduos, baseado num Raspberry Pi.">
+  <title>EcoSort | Triagem inteligente de resíduos</title>
+  <style>
+    :root {
+      --green: #16794b;
+      --green-dark: #105b38;
+      --mint: #eaf7ef;
+      --ink: #17231c;
+      --muted: #5c6b61;
+      --paper: #fbfdfb;
+      --line: #dce8df;
+      --white: #ffffff;
+      --yellow: #f3c94f;
+      --blue: #4d8bd6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      background: rgba(251,253,251,.94);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+    nav { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-weight: 850; font-size: 1.25rem; letter-spacing: -.04em; color: var(--green-dark); text-decoration: none; }
+    .brand span { color: var(--ink); }
+    .navlinks { display: flex; gap: 22px; flex-wrap: wrap; }
+    .navlinks a { font-size: .92rem; color: var(--muted); text-decoration: none; }
+    .navlinks a:hover { color: var(--green); }
+    .hero { padding: 78px 0 64px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 52px; align-items: center; }
+    .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: .13em; font-size: .78rem; font-weight: 800; }
+    h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.02; letter-spacing: -.06em; margin: 14px 0 22px; }
+    h1 em { color: var(--green); font-style: normal; }
+    .lead { font-size: 1.12rem; max-width: 610px; color: var(--muted); }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .btn { display: inline-block; padding: 12px 18px; border-radius: 12px; font-weight: 750; text-decoration: none; border: 1px solid var(--green); }
+    .btn.primary { color: white; background: var(--green); }
+    .btn.secondary { color: var(--green-dark); background: white; }
+    .visual {
+      background: radial-gradient(circle at 75% 20%, #d5f0df, transparent 45%), linear-gradient(145deg, #eef8f0, #e1f1e6);
+      border: 1px solid #d5e9da; border-radius: 28px; padding: 30px; min-height: 350px;
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .bin { width: 220px; height: 245px; position: relative; background: linear-gradient(90deg, #1c754b, #25945e); border-radius: 18px 18px 24px 24px; box-shadow: 0 22px 35px #125f3528; }
+    .bin:before { content: ""; position: absolute; top: -16px; left: -9px; right: -9px; height: 24px; border-radius: 10px; background: #155b3a; }
+    .bin:after { content: "EcoSort"; position: absolute; top: 75px; left: 0; right: 0; color: white; text-align: center; font-weight: 850; font-size: 1.5rem; letter-spacing: -.04em; }
+    .bin-slot { position: absolute; top: 24px; left: 55px; width: 110px; height: 24px; border-radius: 8px; background: #103e2a; }
+    .bin-light { position: absolute; bottom: 35px; left: 95px; width: 30px; height: 30px; border-radius: 50%; background: var(--yellow); border: 5px solid #ffffff55; }
+    .chip { position: absolute; background: white; padding: 9px 12px; border-radius: 12px; box-shadow: 0 8px 24px #153c2415; font-size: .88rem; font-weight: 750; }
+    .chip.one { top: 38px; left: 18px; }
+    .chip.two { right: 14px; top: 132px; }
+    .chip.three { bottom: 30px; left: 18px; }
+    section { padding: 68px 0; }
+    .section-head { max-width: 690px; margin-bottom: 30px; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.12; letter-spacing: -.045em; margin: 8px 0 14px; }
+    .section-head p, .muted { color: var(--muted); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 23px; }
+    .icon { width: 45px; height: 45px; display: grid; place-items: center; border-radius: 13px; background: var(--mint); font-size: 1.4rem; margin-bottom: 15px; }
+    .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .96rem; }
+    .tint { background: var(--mint); }
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; counter-reset: step; }
+    .step { background: white; border: 1px solid #d4e8da; border-radius: 16px; padding: 18px; counter-increment: step; }
+    .step:before { content: "0" counter(step); display: block; color: var(--green); font-weight: 850; font-size: .82rem; margin-bottom: 12px; }
+    .step h3 { margin: 0 0 7px; font-size: 1rem; }
+    .step p { color: var(--muted); font-size: .9rem; margin: 0; }
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: start; }
+    .tech-list { list-style: none; margin: 0; padding: 0; }
+    .tech-list li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .tech-list strong { display: block; }
+    .tech-list span { color: var(--muted); font-size: .94rem; }
+    .note { padding: 20px; background: #fff8df; border: 1px solid #f0dfa2; border-radius: 15px; color: #64531b; font-size: .94rem; }
+    .impact { background: #123f2a; color: white; border-radius: 24px; padding: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .impact p { color: #d5e8dc; }
+    .pill { display: inline-block; margin: 5px 5px 0 0; border: 1px solid #ffffff40; border-radius: 99px; padding: 7px 11px; font-size: .88rem; }
+    footer { padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    @media (max-width: 800px) {
+      .hero-grid, .tech-grid, .impact { grid-template-columns: 1fr; }
+      .hero { padding-top: 52px; }
+      .visual { min-height: 310px; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .navlinks { gap: 12px; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 28px, 1100px); }
+      nav { align-items: flex-start; padding: 16px 0; flex-direction: column; gap: 8px; }
+      .navlinks { font-size: .85rem; }
+      .cards, .steps { grid-template-columns: 1fr; }
+      .visual { padding: 20px; }
+      .chip.one { left: 4px; }
+      .chip.two { right: 0; }
+      .chip.three { left: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Navegação principal">
+      <a class="brand" href="#inicio">Eco<span>Sort</span> ♻</a>
+      <div class="navlinks">
+        <a href="#problema">O problema</a>
+        <a href="#funcionamento">Como funciona</a>
+        <a href="#tecnologia">Tecnologia</a>
+        <a href="#impacto">Benefícios</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Projeto de automação · Raspberry Pi</div>
+          <h1>Separar o lixo.<br><em>Sem complicar.</em></h1>
+          <p class="lead">O EcoSort é a proposta de um caixote inteligente que identifica determinados resíduos e encaminha-os automaticamente para o compartimento adequado, tornando a reciclagem mais simples em espaços partilhados.</p>
+          <div class="actions">
+            <a class="btn primary" href="#funcionamento">Ver como funciona</a>
+            <a class="btn secondary" href="#tecnologia">Conhecer a tecnologia</a>
+          </div>
+        </div>
+        <div class="visual" role="img" aria-label="Ilustração conceptual de um caixote verde EcoSort com sensores">
+          <span class="chip one">📷 Câmara</span>
+          <span class="chip two">⚙️ Triagem automática</span>
+          <span class="chip three">🧠 Raspberry Pi</span>
+          <div class="bin"><div class="bin-slot"></div><div class="bin-light"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problema">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">01 · O desafio</div>
+          <h2>Reciclar corretamente nem sempre é fácil.</h2>
+          <p>Em escolas, cantinas e empresas, os resíduos podem acabar no contentor errado porque as pessoas têm dúvidas ou não prestam atenção à separação. Isso pode dificultar a reciclagem e aumentar o trabalho de triagem.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon">🗑️</div>
+            <h3>Separação incorreta</h3>
+            <p>Um resíduo colocado no compartimento errado pode contaminar outros materiais recicláveis.</p>
+          </article>
+          <article class="card">
+            <div class="icon">⏱️</div>
+            <h3>Tempo perdido</h3>
+            <p>Em alguns locais, a separação posterior exige trabalho adicional por parte dos funcionários.</p>
+          </article>
+          <article class="card">
+            <div class="icon">♻️</div>
+            <h3>Mais apoio à reciclagem</h3>
+            <p>Uma indicação automática pode ajudar as pessoas a encaminhar os resíduos para a categoria correta.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="tint" id="funcionamento">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">02 · Funcionamento</div>
+          <h2>Do resíduo ao compartimento certo.</h2>
+          <p>O processo proposto combina captura de imagem, classificação por software e um mecanismo de encaminhamento.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><h3>Colocar</h3><p>O utilizador coloca um objeto na zona de entrada.</p></article>
+          <article class="step"><h3>Captar</h3><p>Uma câmara regista uma imagem do objeto.</p></article>
+          <article class="step"><h3>Identificar</h3><p>O programa estima a categoria do resíduo.</p></article>
+          <article class="step"><h3>Encaminhar</h3><p>Um motor move uma comporta para direcionar o objeto.</p></article>
+          <article class="step"><h3>Registar</h3><p>O sistema contabiliza a categoria identificada.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="tecnologia">
+      <div class="wrap tech-grid">
+        <div>
+          <div class="eyebrow">03 · Componentes</div>
+          <h2>O Raspberry Pi coordena o sistema.</h2>
+          <p class="muted">O Raspberry Pi 3 B+ funciona como o pequeno computador do protótipo. Executa um sistema operativo open source, recebe dados dos componentes e coordena o processo automático.</p>
+          <div class="note"><strong>Âmbito do protótipo:</strong> para manter o projeto viável, a primeira versão poderá reconhecer um conjunto limitado de objetos comuns e utilizar três destinos: embalagens de plástico/metal, papel/cartão e resíduos indiferenciados.</div>
+        </div>
+        <ul class="tech-list">
+          <li><strong>Raspberry Pi 3 B+</strong><span>Executa o sistema operativo e coordena as operações.</span></li>
+          <li><strong>Linux</strong><span>Sistema operativo open source instalado no equipamento.</span></li>
+          <li><strong>Câmara</strong><span>Capta imagens para o programa de classificação.</span></li>
+          <li><strong>Sensores</strong><span>Detetam a presença de um objeto na zona de entrada.</span></li>
+          <li><strong>Servomotor e comporta</strong><span>Encaminham o resíduo para o compartimento selecionado.</span></li>
+          <li><strong>Programa e scripts</strong><span>Automatizam a sequência de deteção, classificação e triagem.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="impacto">
+      <div class="wrap">
+        <div class="impact">
+          <div>
+            <div class="eyebrow" style="color:#a8e7be">04 · Aplicação</div>
+            <h2>Uma solução para espaços partilhados.</h2>
+            <p>O EcoSort destina-se a ser explorado como protótipo para locais onde muitas pessoas utilizam os mesmos pontos de recolha de resíduos.</p>
+          </div>
+          <div>
+            <h3>Locais onde poderia ser testado</h3>
+            <span class="pill">Escolas</span>
+            <span class="pill">Empresas</span>
+            <span class="pill">Cantinas</span>
+            <span class="pill">Universidades</span>
+            <span class="pill">Espaços comerciais</span>
+            <p style="margin-top:20px;font-size:.92rem">Objetivo: facilitar a separação de resíduos e recolher dados sobre as categorias identificadas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">05 · Desenvolvimento</div>
+          <h2>Começar pequeno e testar.</h2>
+          <p>A primeira versão deverá ser construída e testada com objetos conhecidos, iluminação controlada e um número limitado de categorias. A precisão da classificação terá de ser avaliada antes de qualquer utilização real.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="icon">1️⃣</div><h3>Montar</h3><p>Instalar o Raspberry Pi, a câmara, os sensores e o mecanismo de triagem.</p></article>
+          <article class="card"><div class="icon">2️⃣</div><h3>Configurar</h3><p>Instalar Linux e configurar o programa e os scripts necessários.</p></article>
+          <article class="card"><div class="icon">3️⃣</div><h3>Validar</h3><p>Testar vários resíduos, medir erros e ajustar o sistema de encaminhamento.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">EcoSort · Projeto conceptual de automação com Raspberry Pi · Conteúdo em português de Portugal.</div>
+  </footer>
+</body>
+</html>
