@@ -1,0 +1,110 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="2CFMIRjZHheaYfsr34u9">
+    <mxGraphModel dx="1032" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-22" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-13" value="Captar imagem">
+          <mxGeometry relative="1" x="0.0071" y="10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="298.5" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-25" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Processar imagem e&lt;div&gt;&amp;nbsp;identificar resíduo&lt;/div&gt;">
+          <mxGeometry relative="1" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="340" y="240" />
+              <mxPoint x="340" y="280" />
+            </Array>
+            <mxPoint x="290" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-28" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-12" value="Se identificado, posicionar desviador para o destino escolhido">
+          <mxGeometry relative="1" x="0.0036" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="368.5" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-34" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-12" value="Se sinal chegar em &amp;lt;= 10s, reposicionar desviador&amp;nbsp;&lt;div&gt;para posição inicial e registar resultado&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0566" y="19" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="368.5" y="519" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-35" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Senão , indicar&lt;div&gt;&amp;nbsp;erro e parar sistema&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.01" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="340" y="559" />
+              <mxPoint x="340" y="599" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-37" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-12" value="Se não identificado, posicionar desviador&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;para a zona de rejeição&lt;/span&gt;">
+          <mxGeometry relative="1" x="0.0107" y="10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="228.5" y="360" />
+            </Array>
+            <mxPoint x="280" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-9" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Raspberry PI" vertex="1">
+          <mxGeometry height="640" width="121" x="200" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-39" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-11" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Resíduo detetado na entrada do compartimento">
+          <mxGeometry relative="1" x="-0.0417" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="660" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-11" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Sensores de Passagem&amp;nbsp;" vertex="1">
+          <mxGeometry height="640" width="121" x="680" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-12" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Servomotor" vertex="1">
+          <mxGeometry height="640" width="121" x="518" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-23" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-13" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Enviar imagem">
+          <mxGeometry relative="1" x="-0.0071" y="-10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="298.5" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-13" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Câmara" vertex="1">
+          <mxGeometry height="640" width="121" x="359" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-21" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-14" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Presença detetada">
+          <mxGeometry relative="1" x="0.0071" y="10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="158.5" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-14" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;sequenceEdgeStyle&quot;,&quot;libavoidRouting&quot;:0,&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Sensor de Presença" vertex="1">
+          <mxGeometry height="640" width="121" x="39" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Skn53XFw05cPpn-W4ZDZ-40" edge="1" parent="1" source="Skn53XFw05cPpn-W4ZDZ-9" style="edgeStyle=sequenceEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;libavoidRouting=0;curved=0;defaultLabelBackgroundColor=page;" target="Skn53XFw05cPpn-W4ZDZ-9" value="Iniciar temporizador de 10s e&amp;nbsp;&lt;div&gt;aguardar&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;sinal de passagem&amp;nbsp;&lt;/span&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="340" y="400" />
+              <mxPoint x="340" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
